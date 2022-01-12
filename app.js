@@ -247,6 +247,16 @@ var comfyJS = {
       console.log( "onMessageDeleted default handler" );
     }
   },
+  onBan: function ( channel, username, userstate ) {
+    if( comfyJS.isDebug ) {
+      console.log( "onBan default handler" );
+    }
+  },
+  onTimeout: function ( channel, username, reason, duration, userstate ) {
+    if( comfyJS.isDebug ) {
+      console.log( "onTimeout default handler" );
+    }
+  },
   onJoin: function( user, self, extra ) {
     if( comfyJS.isDebug ) {
       console.log( "onJoin default handler" );
