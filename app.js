@@ -247,12 +247,12 @@ var comfyJS = {
       console.log( "onMessageDeleted default handler" );
     }
   },
-  onBan: function ( channel, username, userstate ) {
+  onBan: function ( channel, username, extra ) {
     if( comfyJS.isDebug ) {
       console.log( "onBan default handler" );
     }
   },
-  onTimeout: function ( channel, username, reason, duration, userstate ) {
+  onTimeout: function ( channel, username, duration, extra ) {
     if( comfyJS.isDebug ) {
       console.log( "onTimeout default handler" );
     }
@@ -480,6 +480,22 @@ var comfyJS = {
       catch( error ) {
         comfyJS.onError( error );
       }
+    });
+	client.on( 'ban', function( channel, username, reason, userstate) {
+	  var extra = {
+	    channel: channel.replace('#', ''),
+		...userstate
+      };
+      // `reason` not passed because it's deprecated, and will always be null.
+	  comfyJS.onBan( channel, username, extra );
+    });
+    client.on( 'timeout', function(channel, username, reason, duration, userstate) {
+	  var extra = {
+	    channel: channel.replace('#', ''),
+		...userstate
+      };
+      // `reason` not passed because it's deprecated, and will always be null.
+	  comfyJS.onTimeout( channel, username, duration, extra );
     });
     client.on( 'join', function( channel, username, self ) {
       var extra = {
